@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_name" tools:ignore="MissingTranslation">EcoLine</string>
+    <string name="title_section1" tools:ignore="MissingTranslation">Denuncia</string>
+    <string name="title_section2" tools:ignore="MissingTranslation">Otras denuncias</string>
+    <string name="title_section3" tools:ignore="MissingTranslation">Info. interés</string>
+    <string name="title_section4" tools:ignore="MissingTranslation">Perfil</string>
+    <string name="action_settings" tools:ignore="MissingTranslation">Settings</string>
+    <string name="about_us" tools:ignore="MissingTranslation">Acerca</string>
+    <string name="title_activity_display_top_vehiculos_contaminantes">DisplayTopVehiculosContaminantes</string>
+    <string name="preference_file_key">com.ecoline.Protected_sensitive_info</string>
+    <string name="default_username">ecoline</string>
+    <string name="logo_description">Descripción de logo</string>
+    <string name="default_empty"></string>
+    
+    <string name="titulo_detalle">Denuncia</string>
+    <string name="comentario1">basura 1</string>
+    <string name="comentario2">basura 2</string>
+    <string name="titulo_denuncia">Denuncias</string>
+    <string name="nombre_denuncia1">Denuncia 1</string>
+    <string name="nombre_denuncia2">Denuncia 2</string>
+    <string name="detalle1"></string>
+
+    <string-array name="tipos_documento">
+        <item>Elegir</item>
+        <item>C.C.</item>
+        <item>C.E.</item>        
+    </string-array>
+</resources>
