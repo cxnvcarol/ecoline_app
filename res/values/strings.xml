@@ -3,8 +3,8 @@
 
     <string name="app_name" tools:ignore="MissingTranslation">EcoLine</string>
     <string name="title_section1" tools:ignore="MissingTranslation">Denuncia</string>
-    <string name="title_section2" tools:ignore="MissingTranslation">Otras denuncias</string>
-    <string name="title_section3" tools:ignore="MissingTranslation">Info. interés</string>
+    <string name="title_section2" tools:ignore="MissingTranslation">Explora</string>
+    <string name="title_section3" tools:ignore="MissingTranslation">Entérate</string>
     <string name="title_section4" tools:ignore="MissingTranslation">Perfil</string>
     <string name="action_settings" tools:ignore="MissingTranslation">Settings</string>
     <string name="about_us" tools:ignore="MissingTranslation">Acerca</string>
