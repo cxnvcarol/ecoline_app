@@ -18,6 +18,11 @@ import android.view.View;
 import android.widget.TextView;
 
 public class Main extends ActionBarActivity implements ActionBar.TabListener {
+	
+	public static final int TAB_DENUNCIA = 0;
+	public static final int TAB_HISTORIAL = 1;
+	public static final int TAB_CONTENIDO = 2;
+	public static final int TAB_PERFIL = 3;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide

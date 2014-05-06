@@ -1,6 +1,7 @@
 package com.ecoline;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,11 +24,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +47,7 @@ import android.widget.TextView;
  * A placeholder fragment containing a simple view.
  */
 public class DenunciaFragment extends Fragment {
+	
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -71,6 +76,7 @@ public class DenunciaFragment extends Fragment {
 	private ImageView imgDenuncia;
 	 private File _file;
 	 private File _dir;
+	private Bitmap foto;
 
 	//private LocationClient mLocationClient;
 
@@ -126,6 +132,7 @@ public class DenunciaFragment extends Fragment {
  					public void onClick(View view) {
  						denunciaTask = new DenunciaTask();
  						denunciaTask.execute((Void) null);
+ 						
  					}
 
  				});
@@ -138,13 +145,34 @@ public class DenunciaFragment extends Fragment {
      }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	       // TODO Auto-generated method stub
+    	       
     	       super.onActivityResult(requestCode, resultCode, data);
-    	       Bitmap bp = (Bitmap) data.getExtras().get("data");
-    	       imgDenuncia.setImageBitmap(bp);
+    	       foto = (Bitmap) data.getExtras().get("data");
+    	       imgDenuncia.setImageBitmap(foto);
         }
+    
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] arr=baos.toByteArray();
+        String result=Base64.encodeToString(arr, Base64.DEFAULT);
+        
+        return result;
+  }
+    public Bitmap StringToBitMap(String image){
+        try{
+            byte [] encodeByte=Base64.decode(image,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+          }catch(Exception e){
+            e.getMessage();
+           return null;
+          }
+  }
     public class DenunciaTask extends AsyncTask<Void, Void, Boolean> {
 
+
+		
 
 		@Override
 		protected Boolean doInBackground(Void... params) {
@@ -182,7 +210,8 @@ public class DenunciaFragment extends Fragment {
 		        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 		        nameValuePairs.add(new BasicNameValuePair(USERNAME, username));
 		        nameValuePairs.add(new BasicNameValuePair(PLACA, placa));
-		        nameValuePairs.add(new BasicNameValuePair(LOCATION, location));			        
+		        nameValuePairs.add(new BasicNameValuePair(LOCATION, location));		
+		        //TODO
 		        
 		        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -193,7 +222,10 @@ public class DenunciaFragment extends Fragment {
 		        Object obj = JSONValue.parse(br.readLine());
 		        JSONObject resp = (JSONObject)obj;
 		        boolean success=((Boolean) resp.get("success")).booleanValue();
+				@SuppressWarnings("unused")
 				String msg=(String) resp.get("message");
+				
+				
 				
 //				if(!success)
 //				{
@@ -220,13 +252,17 @@ public class DenunciaFragment extends Fragment {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
-			
+			changeTab(Main.TAB_HISTORIAL);
 		}
 
 		@Override
 		protected void onCancelled() {
 		}
 	}
+    public void changeTab(int pos)
+    {
+    	((ActionBarActivity)getActivity()).getSupportActionBar().setSelectedNavigationItem(pos);
+    }
 
 }
 
