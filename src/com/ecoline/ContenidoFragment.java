@@ -1,16 +1,36 @@
 package com.ecoline;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import com.actividades.TopVehiculosContaminantesViewActivity;
 import com.entidades.Vehiculo;
 import com.entidades.VehiculoAdapter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -29,6 +49,8 @@ public class ContenidoFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private ListView listaTop ;  
+    
+    private TextView textv;
     
     private TopVehiculosContaminantesViewActivity actividad;
     
@@ -51,8 +73,72 @@ public class ContenidoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contenido, container, false);
-        //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        //textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+        
+        TextView top = (TextView) rootView.findViewById(R.id.lblsaludo1);
+        
+        textv = (TextView) rootView.findViewById(R.id.txtProbando);
+        
+        top.setOnClickListener(new OnClickListener() {
+
+                    public void onClick(View v) {
+                    	
+                    	
+                        textv.setText("Text Has Been Changed");
+                        BufferedReader in = null;
+                        String data = null;
+
+                        try{
+                               HttpClient httpclient = new DefaultHttpClient();
+
+                               HttpGet request = new HttpGet();
+                               URI website = new URI(LoginActivity.SERVER_URL+"/denuncias");
+                               request.setURI(website);
+                               HttpResponse response = httpclient.execute(request);
+                               in = new BufferedReader(new InputStreamReader(
+                                       response.getEntity().getContent()));
+
+                               // NEW CODE
+                               String line = in.readLine();
+                               textv.append(" First line: " + line);
+                               // END OF NEW CODE
+                               int i=1;
+                               while(line!=null)
+                               {
+                            	   i++;
+                            	   line=in.readLine();
+                               }
+                               textv.append("Numero=" + i);
+
+                               textv.append(" Connected ");
+                           }catch(Exception e){
+                               Log.e("log_tag", "Error in http connection "+e.toString());
+                           }
+                    	
+                        if(listaTop.getVisibility()==View.VISIBLE)
+                        {
+                        	listaTop.setVisibility(View.GONE);
+                        }
+                        else
+                        {
+                        	listaTop.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+        
+        TextView mensaje = (TextView) rootView.findViewById(R.id.lblsaludo2);
+        mensaje.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+                if(listaTop.getVisibility()==View.VISIBLE)
+                {
+                	listaTop.setVisibility(View.GONE);
+                }
+                else
+                {
+                	listaTop.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         
 		this.listaTop = (ListView) rootView.findViewById(R.id.listVehiculosContaminantes);
 		
@@ -72,6 +158,7 @@ public class ContenidoFragment extends Fragment {
 //        actividad=new TopVehiculosContaminantesViewActivity();
 //        actividad.onCreate(savedInstanceState);
         
+		
         return rootView;
     }
 }
