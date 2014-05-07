@@ -362,7 +362,8 @@ public class LoginActivity extends Activity {
 						saveStringPar(USERNAME, mUsername);
 						saveStringPar(EMAIL, mEmail);
 						saveStringPar(NAME, mName);
-						saveStringPar(LASTNAME, mLastname);						
+						saveStringPar(LASTNAME, mLastname);			
+						return true;
 					}
 			        
 			        
@@ -373,7 +374,7 @@ public class LoginActivity extends Activity {
 			    	e.printStackTrace();
 			    }
 			    
-			    return true;
+			    return false;
 			
 		}
 
@@ -385,9 +386,10 @@ public class LoginActivity extends Activity {
 			if (success) {
 				finish();
 			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
+				//mPasswordView.setError(getString(R.string.error_incorrect_password));
+				//mPasswordView.requestFocus();
+				mUsernameView.setError(msgPopup);
+				mUsernameView.requestFocus();
 			}
 		}
 

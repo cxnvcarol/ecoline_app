@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -77,6 +79,8 @@ public class DenunciaFragment extends Fragment {
 	 private File _file;
 	 private File _dir;
 	private Bitmap foto;
+	private LinearLayout layoutImage;
+	private LinearLayout layoutImageButtons;
 
 	//private LocationClient mLocationClient;
 
@@ -90,11 +94,16 @@ public class DenunciaFragment extends Fragment {
 //    	 mLocationClient.connect();
         rootView = inflater.inflate(R.layout.fragment_denuncia, container, false);
         
-//        txtLatitud=(TextView) rootView.findViewById(R.id.infoLatitud);
-//        txtLongitud=(TextView) rootView.findViewById(R.id.infoLongitud);
+        txtLatitud=(TextView) rootView.findViewById(R.id.txtLatidud);
+        txtLongitud=(TextView) rootView.findViewById(R.id.txtLongitud);
+        Button btnActivar = (Button) rootView.findViewById(R.id.BtnActivarGPS);
         
         imgDenuncia=(ImageView) rootView.findViewById(R.id.imgDenuncia);
         ImageButton btnImagen=(ImageButton) rootView.findViewById(R.id.BtnSubirFoto);
+        layoutImage=(LinearLayout) rootView.findViewById(R.id.layoutImage);
+        layoutImageButtons=(LinearLayout) rootView.findViewById(R.id.layoutImageButtons);
+        layoutImage.setVisibility(LinearLayout.INVISIBLE);
+        
         
         btnImagen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +111,12 @@ public class DenunciaFragment extends Fragment {
                open();
             }
          });
+        btnActivar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                comenzarLocalizacion();
+            }
+        });
          LocationManager handle = (LocationManager)rootView.getContext().getSystemService(Context.LOCATION_SERVICE);
         
          
@@ -126,6 +141,7 @@ public class DenunciaFragment extends Fragment {
              
          }
          
+         
          rootView.findViewById(R.id.btnDenunciar).setOnClickListener(
  				new View.OnClickListener() {
  					@Override
@@ -136,8 +152,59 @@ public class DenunciaFragment extends Fragment {
  					}
 
  				});
-         
+         comenzarLocalizacion();
         return rootView;
+    }
+    
+    private void comenzarLocalizacion()
+    {
+        //Obtenemos una referencia al LocationManager
+    	  LocationManager handle = (LocationManager)rootView.getContext().getSystemService(Context.LOCATION_SERVICE);
+    	  
+    	  if (!handle.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+              txtLatitud.setText("El GPS esta desactivado");
+         }
+     
+        //Obtenemos la última posición conocida
+        Location loc =handle.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+     
+        //Mostramos la última posición conocida
+        mostrarPosicion(loc);
+     
+        //Nos registramos para recibir actualizaciones de la posición
+        LocationListener locListener = new LocationListener() {
+   		 
+		    public void onLocationChanged(Location location) {
+		        mostrarPosicion(location);
+		    }
+		    
+			public void onProviderDisabled(String provider){
+				 txtLatitud.setText("El GPS esta desactivado");
+		    }
+		 
+		    public void onProviderEnabled(String provider){
+		       //Proveedor encendido
+		    }
+		 
+		    public void onStatusChanged(String provider, int status, Bundle extras){
+		        txtLatitud.setText("Provider Status: " + status);
+		    }
+		};
+     
+        handle.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER, 30000, 0, locListener);
+    }
+    private void mostrarPosicion(Location location) {
+    	if(location!=null)
+    	{
+    		txtLatitud.setText(""+location.getLatitude());
+    		txtLongitud.setText(""+location.getLongitude());
+    	}
+    	else
+    	{
+    		txtLatitud.setText("Latitud: (sin_datos)");
+    		txtLongitud.setText("Longitud: (sin_datos)");
+    	}
     }
     public void open(){
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -147,6 +214,9 @@ public class DenunciaFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     	       
     	       super.onActivityResult(requestCode, resultCode, data);
+
+    	       layoutImage.setVisibility(LinearLayout.VISIBLE);
+    	       layoutImageButtons.setVisibility(LinearLayout.INVISIBLE);
     	       foto = (Bitmap) data.getExtras().get("data");
     	       imgDenuncia.setImageBitmap(foto);
         }
@@ -174,6 +244,9 @@ public class DenunciaFragment extends Fragment {
 
 		
 
+		private EditText txtPlaca;
+		private EditText txtDireccion;
+
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			if(enviarDenuncia())
@@ -187,10 +260,10 @@ public class DenunciaFragment extends Fragment {
 		}
 		private boolean enviarDenuncia()
 		{
-			EditText txtEdit=(EditText)rootView.findViewById(R.id.TxtPlaca);
-	    	
+			txtPlaca=(EditText)rootView.findViewById(R.id.txtPlaca);
+	    	txtDireccion=(EditText)rootView.findViewById(R.id.txtDireccion);
 	    	//txtEdit.setError(null);
-			String placa = txtEdit.getText().toString();
+			String placa = txtPlaca.getText().toString();
 
 			return denunciar(placa, txtLatitud+","+txtLongitud);
 		}
@@ -252,6 +325,8 @@ public class DenunciaFragment extends Fragment {
 		
 		@Override
 		protected void onPostExecute(final Boolean success) {
+			txtPlaca.setText("");
+			txtDireccion.setText("");
 			changeTab(Main.TAB_HISTORIAL);
 		}
 

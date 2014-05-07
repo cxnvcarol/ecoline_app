@@ -15,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 public class Main extends ActionBarActivity implements ActionBar.TabListener {
@@ -112,7 +113,16 @@ public class Main extends ActionBarActivity implements ActionBar.TabListener {
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
+    	if(tab.getPosition()!=TAB_DENUNCIA)
+    	{
+    		esconderTeclado();
+    	}
         mViewPager.setCurrentItem(tab.getPosition());
+    }
+    public void esconderTeclado(){
+    	 final InputMethodManager imm = (InputMethodManager)getSystemService(
+    	            Context.INPUT_METHOD_SERVICE);
+    	        imm.hideSoftInputFromWindow(mViewPager.getWindowToken(), 0);
     }
 
     @Override

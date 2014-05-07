@@ -59,7 +59,7 @@
 
 
             <EditText
-                android:id="@+id/TxtPlaca"
+                android:id="@+id/txtPlaca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -71,7 +71,7 @@
 
             	<requestFocus />
             <EditText
-                android:id="@+id/direccion"
+                android:id="@+id/txtDireccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -82,8 +82,26 @@
 
                 
             </EditText>
+            <TextView
+                android:id="@+id/txtLatidud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"     />
+            
+            <TextView
+                android:id="@+id/txtLongitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"     />
+            
+            <Button
+                android:id="@+id/BtnActivarGPS"
+     			android:layout_height="wrap_content"
+     			android:layout_width="wrap_content"
+     			android:text="Tomar posición GPS"/>
 
             <LinearLayout
+                android:id="@+id/layoutImageButtons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
@@ -124,11 +142,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_marginBottom="15dp"
-                android:layout_marginTop="30dp"
                 android:orientation="horizontal" >
 
                 <LinearLayout
@@ -156,7 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"    
                 android:orientation="vertical" 
-                android:layout_gravity="bottom" >
+                android:layout_marginTop="10dp">
                      
 
                     <CheckBox
