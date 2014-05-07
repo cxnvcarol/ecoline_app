@@ -57,7 +57,10 @@ public class DenunciaFragment extends Fragment {
 	private static final String USERNAME = "username";
 	private static final String PLACA = "placa";
 	private static final String LOCATION = "geolocation";
+	private static final String ADDRESS = "address";
+	private static final String FOTO = "photo";
 	
+	private String address;	
 	private DenunciaTask denunciaTask = null;
 	private EditText txtPlaca;
 	private EditText txtDireccion;
@@ -83,7 +86,7 @@ public class DenunciaFragment extends Fragment {
 	private LinearLayout layoutImage;
 	private LinearLayout layoutImageButtons;
 	private double latitude;
-	private Object longitude;
+	private double longitude;
 	private CheckBox checkAnonima;
 
 	//private LocationClient mLocationClient;
@@ -185,8 +188,8 @@ public class DenunciaFragment extends Fragment {
     		try{
     			latitude=location.getLatitude();
     			longitude=location.getLongitude();
-    			txtDireccion.setHint("Estás aquí: ("+String.format("%.2f", latitude)
-    					+";"+String.format("%.2f", longitude)+")");
+    			txtDireccion.setHint("Estás en: ("+String.format("%.3f", latitude)
+    					+";"+String.format("%.3f", longitude)+")");
     			txtDireccion.setEnabled(false);
     			txtLatitud.setText("");
     		}
@@ -212,13 +215,17 @@ public class DenunciaFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     	       
-    	       super.onActivityResult(requestCode, resultCode, data);
-
+    	       try{
+    	    	   super.onActivityResult(requestCode, resultCode, data);
     	       layoutImage.setVisibility(LinearLayout.VISIBLE);
     	       foto = (Bitmap) data.getExtras().get("data");
     	       imgDenuncia.setImageBitmap(foto);
     	       layoutImageButtons.setVisibility(LinearLayout.GONE);
-    	           	       
+    	       }
+    	       catch(Exception e)
+    	       {
+    	    	   e.printStackTrace();
+    	       }
         }
     
     public String BitMapToString(Bitmap bitmap){
@@ -242,6 +249,8 @@ public class DenunciaFragment extends Fragment {
     public class DenunciaTask extends AsyncTask<Void, Void, Boolean> {
 
 
+		
+
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			if(enviarDenuncia())
@@ -257,10 +266,11 @@ public class DenunciaFragment extends Fragment {
 		{
 	    	//txtEdit.setError(null);
 			String placa = txtPlaca.getText().toString();
+			String address=txtDireccion.getText().toString();
 
-			return denunciar(placa, txtLatitud+","+txtLongitud);
+			return denunciar(placa, (latitude==0&&longitude==0)?null:("("+latitude+";"+longitude+")"),address);
 		}
-		private boolean denunciar(String placa,String location) {
+		private boolean denunciar(String placa,String location,String adress) {
 		    // Create a new HttpClient and Post Header
 		    HttpClient httpclient = new DefaultHttpClient();
 		    HttpPost httppost = new HttpPost(LoginActivity.SERVER_URL+"/denuncia");
@@ -269,7 +279,7 @@ public class DenunciaFragment extends Fragment {
 			        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 	        //int defaultValue = getResources().getInteger(R.string.saved_high_score_default);
 	        //long highScore = sharedPref.getInt(getString(R.string.saved_high_score), defaultValue);
-		    String username=null;
+		    String username="";
 		    if(!checkAnonima.isChecked())
 		    {
 		    	username=sharedPref.getString(LoginActivity.USERNAME, getString(R.string.default_username));
@@ -281,7 +291,11 @@ public class DenunciaFragment extends Fragment {
 		        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 		        nameValuePairs.add(new BasicNameValuePair(USERNAME, username));
 		        nameValuePairs.add(new BasicNameValuePair(PLACA, placa));
-		        nameValuePairs.add(new BasicNameValuePair(LOCATION, location));		
+		        nameValuePairs.add(new BasicNameValuePair(LOCATION, location));
+		        if(address!=null)
+		        	nameValuePairs.add(new BasicNameValuePair(ADDRESS, address));
+		        if(foto!=null)
+		        		nameValuePairs.add(new BasicNameValuePair(FOTO, BitMapToString(foto)));
 		        //TODO
 		        
 		        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
