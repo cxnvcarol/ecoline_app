@@ -1,220 +1,201 @@
-   
-   <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:tools="http://schemas.android.com/tools"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:background="@drawable/fondoverde"
-       android:gravity="center"
-       android:paddingBottom="@dimen/activity_vertical_margin"
-       android:paddingLeft="@dimen/activity_horizontal_margin"
-       android:paddingRight="@dimen/activity_horizontal_margin"
-       android:paddingTop="@dimen/activity_vertical_margin"
-       android:scrollbars="vertical"
-       tools:context="com.ecoline.Perfil$PlaceholderFragment" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/fondoverde"
+    android:gravity="center"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:scrollbars="vertical"
+    tools:context="com.ecoline.Perfil$PlaceholderFragment" >
 
     <TextView
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <ScrollView
-    android:layout_width="fill_parent" android:layout_height="fill_parent">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/section_label"
-        android:orientation="vertical" >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:orientation="vertical" 
-            android:layout_marginBottom="40dp">
-        <TextView
-            android:id="@+id/lblsaludo1"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="!Hola Ciudadano!"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <TextView
-            android:id="@+id/lblsaludo2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Denuncia Chimeneas Andantes"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/section_label"
             android:orientation="vertical" >
 
-
-            <EditText
-                android:id="@+id/txtPlaca"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Escribe la Placa..."
-                android:inputType="text"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textAlignment="center" />
-
-            	<requestFocus />
-            <EditText
-                android:id="@+id/txtDireccion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:hint="La dirección en que viste" >
-
-                
-            </EditText>
-            <TextView
-                android:id="@+id/txtLatidud"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"     />
-            
-            <TextView
-                android:id="@+id/txtLongitud"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"     />
-            
-            <Button
-                android:id="@+id/BtnActivarGPS"
-     			android:layout_height="wrap_content"
-     			android:layout_width="wrap_content"
-     			android:text="Tomar posición GPS"/>
-
             <LinearLayout
-                android:id="@+id/layoutImageButtons"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="15dp"
-                >
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="4"
+                android:orientation="vertical" >
 
-                <LinearLayout
-                    android:id="@+id/espacioDenuncia3"
+                <TextView
+                    android:id="@+id/lblsaludo1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.09"
-                    android:orientation="vertical" >
+                    android:layout_gravity="center_horizontal"
+                    android:text="!Hola Ciudadano!"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-                </LinearLayout>
-
-                <ImageButton
-                    android:id="@+id/BtnSubirFoto"
+                <TextView
+                    android:id="@+id/lblsaludo2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/camera" />
-
-                <ImageButton
-                    android:id="@+id/BtnGaleria"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/gallery" />
-
-                <LinearLayout
-                    android:id="@+id/espacioDenuncia4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.09"
-                    android:orientation="vertical" >
-
-                    
-                </LinearLayout>
+                    android:layout_gravity="center_horizontal"
+                    android:text="Denuncia Chimeneas Andantes"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutImage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginBottom="15dp"
-                android:orientation="horizontal" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.09"
-                    android:orientation="vertical" >
-
-                </LinearLayout>
-
-                <ImageView android:contentDescription="imagen chimenea" android:id="@+id/imgDenuncia" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true" android:layout_marginTop="20dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.09"
-                    android:orientation="vertical" >
-
-                </LinearLayout>
-
-                </LinearLayout>
-            
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"    
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical" 
-                android:layout_marginTop="10dp">
-                     
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <EditText
+                    android:id="@+id/txtPlaca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Escribe la Placa..."
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textAlignment="center" />
+
+                <requestFocus />
+
+                <RelativeLayout
+                    android:id="@+id/layoutLocation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical" >
+
+                    <EditText
+                        android:id="@+id/txtDireccion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:hint="La dirección en que viste"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:layout_alignParentLeft="true">
+                    </EditText>
+
+                    <ImageButton
+                        android:id="@+id/BtnActivarGPS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Aquí lo ví"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/gps" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtLatidud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10" />
+
+                <TextView
+                    android:id="@+id/txtLongitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10" />
+
+                <LinearLayout
+                    android:id="@+id/layoutImageButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top" >
+
+                    <LinearLayout
+                        android:id="@+id/espacioDenuncia3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.09"
+                        android:orientation="vertical" >
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/BtnSubirFoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/camera" />
+
+                    <ImageButton
+                        android:id="@+id/BtnGaleria"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/gallery" />
+
+                    <LinearLayout
+                        android:id="@+id/espacioDenuncia4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.09"
+                        android:orientation="vertical" >
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/imgDenuncia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:contentDescription="imagen chimenea" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="vertical" >
 
                     <CheckBox
                         android:id="@+id/checkDenunciaAnonima"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Denuncia Anónima" 
-                        android:layout_gravity="center"/>
-                
-
+                        android:layout_gravity="center"
+                        android:text="Denuncia Anónima" />
                 </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" 
-                android:layout_weight="1">
 
                 <LinearLayout
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" >
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnDenunciar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="Denunciar" />
-
-                <LinearLayout
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
                     android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/btnDenunciar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Denunciar" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
-</ScrollView>
 </RelativeLayout>

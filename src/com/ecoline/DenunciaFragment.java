@@ -37,13 +37,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
 
 /**
  * A placeholder fragment containing a simple view.
@@ -60,6 +59,8 @@ public class DenunciaFragment extends Fragment {
 	private static final String LOCATION = "geolocation";
 	
 	private DenunciaTask denunciaTask = null;
+	private EditText txtPlaca;
+	private EditText txtDireccion;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -81,6 +82,9 @@ public class DenunciaFragment extends Fragment {
 	private Bitmap foto;
 	private LinearLayout layoutImage;
 	private LinearLayout layoutImageButtons;
+	private double latitude;
+	private Object longitude;
+	private CheckBox checkAnonima;
 
 	//private LocationClient mLocationClient;
 
@@ -96,7 +100,7 @@ public class DenunciaFragment extends Fragment {
         
         txtLatitud=(TextView) rootView.findViewById(R.id.txtLatidud);
         txtLongitud=(TextView) rootView.findViewById(R.id.txtLongitud);
-        Button btnActivar = (Button) rootView.findViewById(R.id.BtnActivarGPS);
+        ImageButton btnActivar = (ImageButton) rootView.findViewById(R.id.BtnActivarGPS);
         
         imgDenuncia=(ImageView) rootView.findViewById(R.id.imgDenuncia);
         ImageButton btnImagen=(ImageButton) rootView.findViewById(R.id.BtnSubirFoto);
@@ -104,6 +108,12 @@ public class DenunciaFragment extends Fragment {
         layoutImageButtons=(LinearLayout) rootView.findViewById(R.id.layoutImageButtons);
         layoutImage.setVisibility(LinearLayout.INVISIBLE);
         
+
+		txtPlaca=(EditText)rootView.findViewById(R.id.txtPlaca);
+		//txtPlaca.setError("mira");
+    	txtDireccion=(EditText)rootView.findViewById(R.id.txtDireccion);
+    	
+    	checkAnonima=(CheckBox)rootView.findViewById(R.id.checkDenunciaAnonima);
         
         btnImagen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,31 +127,6 @@ public class DenunciaFragment extends Fragment {
                 comenzarLocalizacion();
             }
         });
-         LocationManager handle = (LocationManager)rootView.getContext().getSystemService(Context.LOCATION_SERVICE);
-        
-         
-         if (!handle.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
- //            txtLatitud.setText("El GPS esta desactivado");
-   //          txtLongitud.setText("El GPS esta desactivado");
-        }
-         else
-         {
-        	 //Location loc= mLocationClient.getLastLocation();
-             Location loc=handle.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-             if(loc!=null)
-             {
-//            	 txtLatitud.setText(String.valueOf(loc.getLatitude()));
-//                 txtLongitud.setText(String.valueOf(loc.getLongitude()));
-             }
-             else
-             {
-//            	 txtLatitud.setText("No fue posible obtener la latitud");
-//                 txtLongitud.setText("No fue posible obtener la longitud");
-             }
-             
-         }
-         
-         
          rootView.findViewById(R.id.btnDenunciar).setOnClickListener(
  				new View.OnClickListener() {
  					@Override
@@ -152,7 +137,7 @@ public class DenunciaFragment extends Fragment {
  					}
 
  				});
-         comenzarLocalizacion();
+         //comenzarLocalizacion();
         return rootView;
     }
     
@@ -162,7 +147,7 @@ public class DenunciaFragment extends Fragment {
     	  LocationManager handle = (LocationManager)rootView.getContext().getSystemService(Context.LOCATION_SERVICE);
     	  
     	  if (!handle.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-              txtLatitud.setText("El GPS esta desactivado");
+              txtLatitud.setText("Debe activar el GPS");
          }
      
         //Obtenemos la última posición conocida
@@ -196,14 +181,28 @@ public class DenunciaFragment extends Fragment {
     }
     private void mostrarPosicion(Location location) {
     	if(location!=null)
-    	{
-    		txtLatitud.setText(""+location.getLatitude());
-    		txtLongitud.setText(""+location.getLongitude());
+    	{    		
+    		try{
+    			latitude=location.getLatitude();
+    			longitude=location.getLongitude();
+    			txtDireccion.setHint("Estás aquí: ("+String.format("%.2f", latitude)
+    					+";"+String.format("%.2f", longitude)+")");
+    			txtDireccion.setEnabled(false);
+    			txtLatitud.setText("");
+    		}
+    		catch(Exception e)
+    		{
+    			latitude=0;
+    			txtDireccion.setEnabled(true);
+    		}    		
+    		//txtLatitud.setText(""+location.getLatitude());
+    		//txtLongitud.setText(""+location.getLongitude());
+    		
     	}
     	else
     	{
-    		txtLatitud.setText("Latitud: (sin_datos)");
-    		txtLongitud.setText("Longitud: (sin_datos)");
+    		txtLatitud.setText("No se pudo obtener la posición.");
+    		txtDireccion.setEnabled(true);
     	}
     }
     public void open(){
@@ -216,9 +215,10 @@ public class DenunciaFragment extends Fragment {
     	       super.onActivityResult(requestCode, resultCode, data);
 
     	       layoutImage.setVisibility(LinearLayout.VISIBLE);
-    	       layoutImageButtons.setVisibility(LinearLayout.INVISIBLE);
     	       foto = (Bitmap) data.getExtras().get("data");
     	       imgDenuncia.setImageBitmap(foto);
+    	       layoutImageButtons.setVisibility(LinearLayout.GONE);
+    	           	       
         }
     
     public String BitMapToString(Bitmap bitmap){
@@ -242,11 +242,6 @@ public class DenunciaFragment extends Fragment {
     public class DenunciaTask extends AsyncTask<Void, Void, Boolean> {
 
 
-		
-
-		private EditText txtPlaca;
-		private EditText txtDireccion;
-
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			if(enviarDenuncia())
@@ -260,8 +255,6 @@ public class DenunciaFragment extends Fragment {
 		}
 		private boolean enviarDenuncia()
 		{
-			txtPlaca=(EditText)rootView.findViewById(R.id.txtPlaca);
-	    	txtDireccion=(EditText)rootView.findViewById(R.id.txtDireccion);
 	    	//txtEdit.setError(null);
 			String placa = txtPlaca.getText().toString();
 
@@ -276,7 +269,12 @@ public class DenunciaFragment extends Fragment {
 			        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 	        //int defaultValue = getResources().getInteger(R.string.saved_high_score_default);
 	        //long highScore = sharedPref.getInt(getString(R.string.saved_high_score), defaultValue);
-	        String username=sharedPref.getString(LoginActivity.USERNAME, getString(R.string.default_username));
+		    String username=null;
+		    if(!checkAnonima.isChecked())
+		    {
+		    	username=sharedPref.getString(LoginActivity.USERNAME, getString(R.string.default_username));
+		    }
+	        
 
 		    try {
 		        // Add your data

@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -49,6 +50,7 @@ public class Main extends ActionBarActivity implements ActionBar.TabListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout);
 
+        
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -97,6 +99,14 @@ public class Main extends ActionBarActivity implements ActionBar.TabListener {
         return true;
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+       // ignore orientation change
+       if (newConfig.orientation != Configuration.ORIENTATION_LANDSCAPE) {
+           super.onConfigurationChanged(newConfig);
+       }
+    }
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
