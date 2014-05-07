@@ -55,7 +55,7 @@ public class HistorialFragment extends Fragment {
 		TextView text = (TextView)rootView.findViewById(R.id.descripcion1);
 		if(text.getText().equals(""))
 		{			
-			text.setText("Esta denuncia se realizÃ³ el dia 14 del mes de abril del aÃ±o 2014, donde un bus parqueado se atreviÃ³ a contaminar nuestro ambiente; quemenlos a todos!");			
+			text.setText("Esta denuncia se realizó el dia 14 del mes de abril del año 2014, donde un bus parqueado se atrevió a contaminar nuestro ambiente; quemenlos a todos!");			
 		}
 		else
 		{

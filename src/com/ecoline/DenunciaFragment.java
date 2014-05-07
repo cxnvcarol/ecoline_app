@@ -100,7 +100,8 @@ public class DenunciaFragment extends Fragment {
 //    	mLocationClient = new LocationClient(this, this, this);
 //    	 mLocationClient.connect();
         rootView = inflater.inflate(R.layout.fragment_denuncia, container, false);
-        
+        latitude=0;
+        longitude=0;
         txtLatitud=(TextView) rootView.findViewById(R.id.txtLatidud);
         txtLongitud=(TextView) rootView.findViewById(R.id.txtLongitud);
         ImageButton btnActivar = (ImageButton) rootView.findViewById(R.id.BtnActivarGPS);
@@ -279,7 +280,7 @@ public class DenunciaFragment extends Fragment {
 			        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 	        //int defaultValue = getResources().getInteger(R.string.saved_high_score_default);
 	        //long highScore = sharedPref.getInt(getString(R.string.saved_high_score), defaultValue);
-		    String username="";
+		    String username=null;
 		    if(!checkAnonima.isChecked())
 		    {
 		    	username=sharedPref.getString(LoginActivity.USERNAME, getString(R.string.default_username));
@@ -289,9 +290,11 @@ public class DenunciaFragment extends Fragment {
 		    try {
 		        // Add your data
 		        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-		        nameValuePairs.add(new BasicNameValuePair(USERNAME, username));
+		        if(username!=null)
+		        	nameValuePairs.add(new BasicNameValuePair(USERNAME, username));
 		        nameValuePairs.add(new BasicNameValuePair(PLACA, placa));
-		        nameValuePairs.add(new BasicNameValuePair(LOCATION, location));
+		        if(location!=null)
+		        	nameValuePairs.add(new BasicNameValuePair(LOCATION, location));
 		        if(address!=null)
 		        	nameValuePairs.add(new BasicNameValuePair(ADDRESS, address));
 		        if(foto!=null)

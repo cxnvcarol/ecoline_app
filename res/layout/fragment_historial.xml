@@ -8,10 +8,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ecoline.Perfil$PlaceholderFragment"
-    android:background="@color/white" >
+    android:background="@drawable/fondoverde">
 
     <TextView
-        android:id="@+id/titulo_denuncia"
+        android:id="@+id/titulo_historial"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -28,7 +28,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal" 
+            android:layout_marginBottom="15dp">
 
             <ImageView
                 android:id="@+id/imageView1"
@@ -42,8 +43,42 @@
                 android:layout_height="29dp"
                 android:background="@color/white"
                 android:text="@string/comentario1"
-                android:onClick="abrirDenuncia" />
+                android:onClick="abrirDenuncia"
+                 />
+            
+            
 
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:id="@+id/layoutTodas"
+            >
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/difuminado"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/lbltodas"
+                android:onClick="onClick"
+				android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Otras denuncias"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+             </LinearLayout>
+
+
+        <ListView
+            android:id="@+id/listOtrasDenuncias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+
+        </ListView>
         </LinearLayout>
 
         <TextView
