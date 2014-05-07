@@ -1,112 +1,70 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:background="@drawable/fondoverde"
+    android:gravity="center"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.ecoline.Perfil$PlaceholderFragment"
-    android:background="@drawable/fondoverde">
+    android:scrollbars="vertical|none"
+    tools:context="com.ecoline.Perfil$PlaceholderFragment" >
 
     <TextView
+        android:id="@+id/section_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/section_label"
+        android:orientation="vertical" 
+        >
+
+        <TextView
         android:id="@+id/titulo_historial"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="5dp"
-        android:text="@string/titulo_detalle"
+        android:text="Estamos cambiando la ciudad..."
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:typeface="serif" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
+        
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" 
-            android:layout_marginBottom="15dp">
-
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/abc_ic_go_search_api_holo_light" />
-
-            <Button
-                android:id="@+id/btnDenunciar"
-                android:layout_width="wrap_content"
-                android:layout_height="29dp"
-                android:background="@color/white"
-                android:text="@string/comentario1"
-                android:onClick="abrirDenuncia"
-                 />
-            
-            
-
-        </LinearLayout>
-        <LinearLayout android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:id="@+id/layoutTodas"
-            >
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="25dp"
             android:background="@drawable/difuminado"
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/lbltodas"
+                android:id="@+id/lblOtrasDenuncias"
                 android:onClick="onClick"
 				android:clickable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Otras denuncias"
+                android:text="Explora otras denuncias"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-             </LinearLayout>
-
+        </LinearLayout>
 
         <ListView
             android:id="@+id/listOtrasDenuncias"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone" >
+            </ListView>
 
-        </ListView>
-        </LinearLayout>
+        
 
-        <TextView
-            android:id="@+id/descripcion1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detalle1"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/abc_ic_go_search_api_holo_light" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="86dp"
-                android:layout_height="26dp"
-                android:background="@color/white"
-                android:text="@string/comentario2" />
-
-        </LinearLayout>
-
+        
+        
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

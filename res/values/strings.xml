@@ -15,6 +15,7 @@
     <string name="default_empty"></string>
     
     <string name="titulo_detalle">Denuncia</string>
+    <string name="hintDireccion">La dirección en que lo viste</string>
     <string name="comentario1">basura 1</string>
     <string name="comentario2">basura 2</string>
     <string name="titulo_denuncia">Denuncias</string>

@@ -169,6 +169,8 @@ public class DenunciaFragment extends Fragment {
 		    
 			public void onProviderDisabled(String provider){
 				 txtLatitud.setText("El GPS esta desactivado");
+				 txtDireccion.setEnabled(true);				 
+				 txtDireccion.setHint(R.string.hintDireccion);
 		    }
 		 
 		    public void onProviderEnabled(String provider){
@@ -198,6 +200,7 @@ public class DenunciaFragment extends Fragment {
     		{
     			latitude=0;
     			txtDireccion.setEnabled(true);
+    			txtDireccion.setHint(R.string.hintDireccion);
     		}    		
     		//txtLatitud.setText(""+location.getLatitude());
     		//txtLongitud.setText(""+location.getLongitude());
@@ -237,16 +240,7 @@ public class DenunciaFragment extends Fragment {
         
         return result;
   }
-    public Bitmap StringToBitMap(String image){
-        try{
-            byte [] encodeByte=Base64.decode(image,Base64.DEFAULT);
-            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-          }catch(Exception e){
-            e.getMessage();
-           return null;
-          }
-  }
+   
     public class DenunciaTask extends AsyncTask<Void, Void, Boolean> {
 
 
